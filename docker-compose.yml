@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: some-api
+    build:
+      context: .
+      dockerfile: src/API/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - postgres
+    restart: always
+    environment:
+      - "ConnectionStrings:Postgres=Host=postgres; Port=5432; Database=postgres; User ID=postgres; Password=postgres"
+    
+  postgres:
+    container_name: some-postgres
+    image: postgres
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - .docker/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    restart: unless-stopped
