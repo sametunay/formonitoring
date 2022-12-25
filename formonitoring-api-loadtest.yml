@@ -1,0 +1,30 @@
+config:
+  target: "http://192.168.122.240:5000"
+  phases:
+    # - duration: 20
+    #   arrivalRate: 2
+    #   name: "warm up"
+    # - duration: 40
+    #   arrivalRate: 2
+    #   rampTo: 50
+    #   name: "ramp up laod"
+    - duration: 60
+      arrivalRate: 10
+      name: "sustained load"
+
+scenarios:
+  - name: "post -> put -> get -> get one -> delete"
+    flow: 
+      - post:
+          url: "/"
+          json: "{}"
+      - put:
+          url: "/"
+          json: "{}"
+      - get:
+          url: "/"
+      - get:
+          url: "/get-one"
+      - delete:
+          url: "/"
+
